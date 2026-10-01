@@ -22,7 +22,8 @@ async function fetchPosts() {
         }
 
         const posts = await response.json();
-        const fivePosts = posts.slice(0, 5);
+        const fivePosts = [];
+        //const fivePosts = posts.slice(0, 5);
         displayPosts(fivePosts);
 
     } catch (error) {
@@ -39,6 +40,12 @@ async function fetchPosts() {
 }
 
 function displayPosts(posts) {
+    // New: Handle empty array state gracefully
+    if (posts.length === 0) {
+        postsContainer.textContent = "No posts available to display.";
+        return; // Exit the function early
+    }
+
     posts.forEach((post, index) => {
         const postCard = document.createElement("div");
         postCard.classList.add("post-card");
